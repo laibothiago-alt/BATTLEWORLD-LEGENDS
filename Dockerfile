@@ -1,13 +1,10 @@
 FROM node:22-slim
+
 WORKDIR /app
 
-RUN apt-get update \
- && apt-get install -y --no-install-recommends unzip \
- && rm -rf /var/lib/apt/lists/*
-
-COPY battleworld-app.tar.gz.zip /tmp/battleworld.zip
-RUN unzip -q /tmp/battleworld.zip -d /app \
- && rm /tmp/battleworld.zip
+COPY battleworld-app.tar.gz /tmp/battleworld-app.tar.gz
+RUN tar -xzf /tmp/battleworld-app.tar.gz -C /app \
+ && rm /tmp/battleworld-app.tar.gz
 
 ENV NODE_ENV=production PORT=3000
 EXPOSE 3000
